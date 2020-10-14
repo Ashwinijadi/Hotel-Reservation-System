@@ -5,6 +5,7 @@ public class Hotel {
 	public long weekRatesFor_RegularCustomer;
 	public long weekendRatesFor_RegularCustomer;
 	public long price;
+	public int rating;
 
 	public long getPrice() {
 		return price;
@@ -14,10 +15,19 @@ public class Hotel {
 		this.price = price;
 	}
 
-	public Hotel(String hotelName, long  weekRatesFor_RegularCustomer, long weekendRatesFor_RegularCustomer) {
+	public Hotel(String hotelName, long  weekRatesFor_RegularCustomer, long weekendRatesFor_RegularCustomer,int rating) {
 		this.hotelName = hotelName;
 		this.weekRatesFor_RegularCustomer =weekRatesFor_RegularCustomer;
-		this.weekendRatesFor_RegularCustomer= weekendRatesFor_RegularCustomer;;
+		this.weekendRatesFor_RegularCustomer= weekendRatesFor_RegularCustomer;
+		this.rating=rating;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 
 	public String getHotelName() {

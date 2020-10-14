@@ -8,15 +8,15 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Comparator;
 import java.util.Calendar;
+import java.util.stream.Collectors;
 
 public class HotelReservation {
-	// private static HashMap<String, Integer> hotelNames = new HashMap<String,
 	private static List<Hotel> hotels = new ArrayList<Hotel>();
 	private static Scanner input = new Scanner(System.in);
 
-	public static boolean addHotel(String name, long weekRatesFor_RegularCustomer,
-			long weekendRatesFor_RegularCustomer) {
-		Hotel hotel_list = new Hotel(name, weekRatesFor_RegularCustomer, weekendRatesFor_RegularCustomer);
+	public static boolean addHotel(String name, long weekRatesFor_RegularCustomer, long weekendRatesFor_RegularCustomer,
+			int rating) {
+		Hotel hotel_list = new Hotel(name, weekRatesFor_RegularCustomer, weekendRatesFor_RegularCustomer, rating);
 		hotels.add(hotel_list);
 		return true;
 	}
@@ -56,6 +56,7 @@ public class HotelReservation {
 					+ workDays * hotel_list.weekRatesFor_RegularCustomer;
 			hotel_list.setPrice(price);
 		}
+		// List<Hotel>ratingList=hotels.stream().sorted(Comparator.comparing(Hotel::getPrice)).collect(Collectors.toList());
 		Hotel cheapHotel = hotels.stream().sorted(Comparator.comparing(Hotel::getPrice)).findFirst().orElse(null);
 		long total = cheapHotel.getPrice();
 		cheapHotel.setPrice(total);
@@ -65,23 +66,25 @@ public class HotelReservation {
 	public static void main(String[] args) {
 		System.out.println("Welcome to the Hotel Reservation Program");
 		HotelReservation hotel_price = new HotelReservation();
-		HotelReservation.addHotel("LakeWood", 110, 90);
-		HotelReservation.addHotel("BridgeWood", 160, 50);
-		HotelReservation.addHotel("RidgeWood", 220, 150);
+		HotelReservation.addHotel("LakeWood", 110, 90, 3);
+		HotelReservation.addHotel("BridgeWood", 160, 50, 4);
+		HotelReservation.addHotel("RidgeWood", 220, 150, 5);
 		System.out.println("enter name of hotel");
 		String hotel1 = input.next();
 		System.out.println("enter Price for weekday");
 		int week_price1 = input.nextInt();
 		System.out.println("enter Price for weekdend");
 		int weekend_price1 = input.nextInt();
-		System.out.println(addHotel(hotel1, week_price1, weekend_price1));
+		System.out.println("Enter Rating of Hotel");
+		int rating1 = input.nextInt();
+		System.out.println(addHotel(hotel1, week_price1, weekend_price1, rating1));
 		System.out.println("enter start date:");
 		String startD = input.next();
 		System.out.println("enter end date:");
 		String endD = input.next();
 		Hotel cheap = hotel_price.findCheapHotelForGivenDateRange(startD, endD);
-		System.out.println("Hotel name is" + cheap.getHotelName() + "Hotel week price "
-				+ cheap.getWeekendRatesFor_RegularCustomer() + "weekend price" + cheap.getWeekRatesFor_RegularCustomer()
-				+ "total price" + cheap.getPrice());
+		System.out.println("Hotel name is " + cheap.getHotelName() +"\nHotel week price is "
+				+ cheap.getWeekendRatesFor_RegularCustomer() + "\nweekend price is " +cheap.getWeekRatesFor_RegularCustomer()
+				+ "\ntotal price is " + cheap.getPrice()+"rating is "+cheap.getRating());
 	}
 }
