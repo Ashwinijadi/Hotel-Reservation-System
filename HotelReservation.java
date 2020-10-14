@@ -21,7 +21,7 @@ public class HotelReservation {
 		return true;
 	}
 
-	public Hotel findCheapHotelForGivenDateRange(String startDate, String endDate) {
+	public Hotel findBestRatedHotelForGivenDateRange(String startDate, String endDate) {
 		Date start_date = null;
 		Date end_date = null;
 		try {
@@ -51,18 +51,16 @@ public class HotelReservation {
 			}
 		} while (startCal.getTimeInMillis() < endCal.getTimeInMillis());
 		long weekend = dateRange - workDays;
+		
 		for (Hotel hotel_list : hotels) {
 			long price = weekend * hotel_list.weekendRatesFor_RegularCustomer
 					+ workDays * hotel_list.weekRatesFor_RegularCustomer;
 			hotel_list.setPrice(price);
 		}
-		List<Hotel>ratingList=hotels.stream().sorted(Comparator.comparing(Hotel::getPrice)).collect(Collectors.toList());
+		List<Hotel>ratingList=hotels.stream().sorted(Comparator.comparing(Hotel::getRating)).collect(Collectors.toList());
 		Hotel cheapHotel=ratingList.get(0);
-		long cheapPrice=ratingList.get(0).getPrice();
 		for(Hotel h:ratingList) {
-			if(h.getPrice()<cheapPrice)
-				cheapPrice=h.getPrice();
-			if (h.getRating() > cheapHotel.getRating())
+			if (h.getRating() >= cheapHotel.getRating())
 				cheapHotel = h;		
 			else 
 				break;
@@ -89,9 +87,9 @@ public class HotelReservation {
 		String startD = input.next();
 		System.out.println("enter end date:");
 		String endD = input.next();
-		Hotel cheap = hotel_price.findCheapHotelForGivenDateRange(startD, endD);
-		System.out.println("Hotel name is " + cheap.getHotelName() +"\nHotel week price is "
-				+ cheap.getWeekendRatesFor_RegularCustomer() + "\nweekend price is " +cheap.getWeekRatesFor_RegularCustomer()
-				+ "\ntotal price is " + cheap.getPrice()+"rating is "+cheap.getRating());
+		Hotel cheap = hotel_price.findBestRatedHotelForGivenDateRange(startD, endD);
+		System.out.println("Hotel name is " + cheap.getHotelName() +"\nHotel weekend price is "
+				+ cheap.getWeekendRatesFor_RegularCustomer() + "\nweek price is " +cheap.getWeekRatesFor_RegularCustomer()
+				+ "\ntotal price is " + cheap.getPrice()+"\nrating is "+cheap.getRating());
 	}
 }
