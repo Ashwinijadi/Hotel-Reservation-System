@@ -56,10 +56,17 @@ public class HotelReservation {
 					+ workDays * hotel_list.weekRatesFor_RegularCustomer;
 			hotel_list.setPrice(price);
 		}
-		// List<Hotel>ratingList=hotels.stream().sorted(Comparator.comparing(Hotel::getPrice)).collect(Collectors.toList());
-		Hotel cheapHotel = hotels.stream().sorted(Comparator.comparing(Hotel::getPrice)).findFirst().orElse(null);
-		long total = cheapHotel.getPrice();
-		cheapHotel.setPrice(total);
+		List<Hotel>ratingList=hotels.stream().sorted(Comparator.comparing(Hotel::getPrice)).collect(Collectors.toList());
+		Hotel cheapHotel=ratingList.get(0);
+		long cheapPrice=ratingList.get(0).getPrice();
+		for(Hotel h:ratingList) {
+			if(h.getPrice()<cheapPrice)
+				cheapPrice=h.getPrice();
+			if (h.getRating() > cheapHotel.getRating())
+				cheapHotel = h;		
+			else 
+				break;
+		}
 		return cheapHotel;
 	}
 
