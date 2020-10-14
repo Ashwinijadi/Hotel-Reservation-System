@@ -4,6 +4,15 @@ public class Hotel
 {
 	public String hotelName;
 	public long rates;
+	public long price;
+
+	public long getPrice() {
+		return price;
+	}
+
+	public void setPrice(long price) {
+		this.price = price;
+	}
 
 	public Hotel(String hotelName, long rates) {
 		this.hotelName = hotelName;
