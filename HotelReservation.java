@@ -7,6 +7,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Comparator;
+import java.util.Calendar;
 
 public class HotelReservation {
 	// private static HashMap<String, Integer> hotelNames = new HashMap<String,
@@ -30,11 +31,34 @@ public class HotelReservation {
 			e.printStackTrace();
 		}
 
-		Hotel cheapHotel = hotels.stream().sorted(Comparator.comparing(Hotel::getWeekRatesFor_RegularCustomer))
-				.findFirst().orElse(null);
+//		Hotel cheapHotel_Weekend= hotels.stream().sorted(Comparator.comparing(Hotel::getWeekend_rates)).findFirst().orElse(null);
+//		Hotel cheapHotel_Week=hotels.stream().sorted(Comparator.comparing(Hotel::getRates)).findFirst().orElse(null);
 		long dateRange = 1 + ((end_date.getTime() - start_date.getTime()) / (1000 * 60 * 60 * 24));
-		long price = cheapHotel.getWeekRatesFor_RegularCustomer();
-		cheapHotel.setPrice(price);
+		Calendar startCal = Calendar.getInstance();
+		startCal.setTime(start_date);
+		Calendar endCal = Calendar.getInstance();
+		endCal.setTime(end_date);
+		long workDays = 0;
+		if (startCal.getTimeInMillis() > endCal.getTimeInMillis()) {
+			startCal.setTime(end_date);
+			endCal.setTime(start_date);
+		}
+		do {
+			startCal.add(Calendar.DAY_OF_MONTH, 1);
+			if (startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
+					&& startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+				++workDays;
+			}
+		} while (startCal.getTimeInMillis() < endCal.getTimeInMillis());
+		long weekend = dateRange - workDays;
+		for (Hotel hotel_list : hotels) {
+			long price = weekend * hotel_list.weekendRatesFor_RegularCustomer
+					+ workDays * hotel_list.weekRatesFor_RegularCustomer;
+			hotel_list.setPrice(price);
+		}
+		Hotel cheapHotel = hotels.stream().sorted(Comparator.comparing(Hotel::getPrice)).findFirst().orElse(null);
+		long total = cheapHotel.getPrice();
+		cheapHotel.setPrice(total);
 		return cheapHotel;
 	}
 
@@ -51,6 +75,13 @@ public class HotelReservation {
 		System.out.println("enter Price for weekdend");
 		int weekend_price1 = input.nextInt();
 		System.out.println(addHotel(hotel1, week_price1, weekend_price1));
-		
+		System.out.println("enter start date:");
+		String startD = input.next();
+		System.out.println("enter end date:");
+		String endD = input.next();
+		Hotel cheap = hotel_price.findCheapHotelForGivenDateRange(startD, endD);
+		System.out.println("Hotel name is" + cheap.getHotelName() + "Hotel week price "
+				+ cheap.getWeekendRatesFor_RegularCustomer() + "weekend price" + cheap.getWeekRatesFor_RegularCustomer()
+				+ "total price" + cheap.getPrice());
 	}
 }
