@@ -49,11 +49,16 @@ public class HotelReservation {
 			}
 		} while (startCal.getTimeInMillis() < endCal.getTimeInMillis());
 		long weekend = dateRange - workDays;
-
-		for (Hotel hotel_list : hotels) {
-			long price = weekend * hotel_list.weekendRatesFor_RegularCustomer
-					+ workDays * hotel_list.weekRatesFor_RegularCustomer;
-			hotel_list.setPrice(price);
+		try {
+			if (customer.getCustomerType().equals("reward")) {
+				for (Hotel hotel_List : hotels) {
+					long total = workDays * hotel_List.getWeekRatesFor_RewardCustomer()
+							+ weekend * hotel_List.getWeekendRatesFor_RewardCustomer();
+					hotel_List.setTotal(total);
+				}
+			}
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
 		}
 
 		List<Hotel> ratingList = hotels.stream().sorted(Comparator.comparing(Hotel::getPrice))
