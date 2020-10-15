@@ -14,11 +14,11 @@ public class HotelReservation {
 	private static List<Hotel> hotels = new ArrayList<Hotel>();
 	private static Scanner input = new Scanner(System.in);
 
-	public static Hotel addHotel(String name, long weekRatesFor_RegularCustomer, long weekendRatesFor_RegularCustomer,
+	public static boolean addHotel(String name, long weekRatesFor_RegularCustomer, long weekendRatesFor_RegularCustomer,
 			long weekRatesFor_RewardCustomer, long weekendRatesFor_RewardCustomer, int rating) {
 		Hotel hotel_list = new Hotel(name, weekRatesFor_RegularCustomer, weekendRatesFor_RegularCustomer,
 				weekRatesFor_RewardCustomer, weekendRatesFor_RewardCustomer, rating);
-		return hotel_list;
+		return true;
 	}
 
 	public static void main(String[] args) {
