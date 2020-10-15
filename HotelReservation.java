@@ -9,7 +9,6 @@ import java.text.ParseException;
 import java.util.Comparator;
 import java.util.Calendar;
 import java.util.stream.Collectors;
-
 public class HotelReservation {
 	private static List<Hotel> hotels = new ArrayList<Hotel>();
 	private static Scanner input = new Scanner(System.in);
@@ -57,6 +56,13 @@ public class HotelReservation {
 					hotel_List.setTotal(total);
 				}
 			}
+			if (customer.getCustomerType().equals("regular")) {
+				for (Hotel hotel_List : hotels) {
+					long price = workDays * hotel_List.getWeekRatesFor_RegularCustomer()
+							+ weekend * hotel_List.getWeekendRatesFor_RegularCustomer();
+					hotel_List.setPrice(price);
+				}
+			}
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
@@ -100,7 +106,18 @@ public class HotelReservation {
 		CustomerType customer = new CustomerType();
 		System.out.println("Enter type of customer \n 1.regular ln 2.reward");
 		System.out.println("Enter choice");
-		int choice = input.nextInt();	
+		int choice = input.nextInt();
+		if (choice == 1) {
+			customer.setCustomerType("regular");
+			System.out.println("enter start date:");
+			String startD = input.next();
+			System.out.println("enter end date:");
+			String endD = input.next();
+			Hotel cheap = hotel_price.findCheapBestRatedHotelForGivenDateRange(startD, endD, customer);
+			System.out.println(cheap.getHotelName() + " week rate :" + cheap.getWeekRatesFor_RegularCustomer()
+					+ "weekend" + cheap.getWeekendRatesFor_RegularCustomer() + " total :" + cheap.getTotal() + "ratings"
+					+ cheap.getRating());
+		}
 		if (choice == 2) {
 			customer.setCustomerType("reward");
 			System.out.println("enter start date:");
