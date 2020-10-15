@@ -8,6 +8,15 @@ public class Hotel {
 	public long weekendRatesFor_RewardCustomer;
 	public long price;
 	public int rating;
+	public long total;
+
+	public long getTotal() {
+		return total;
+	}
+
+	public void setTotal(long total) {
+		this.total = total;
+	}
 
 	public long getPrice() {
 		return price;
@@ -27,14 +36,14 @@ public class Hotel {
 		this.rating = rating;
 	}
 
-	@Override
-	public String toString() {
-		return "Hotel [hotelName=" + hotelName + ", weekRatesFor_RegularCustomer=" + weekRatesFor_RegularCustomer
-				+ ", weekendRatesFor_RegularCustomer=" + weekendRatesFor_RegularCustomer
-				+ ", weekRatesFor_RewardCustomer=" + weekRatesFor_RewardCustomer + ", weekendRatesFor_RewardCustomer="
-				+ weekendRatesFor_RewardCustomer + ", price=" + price + ", rating=" + rating + "]";
-	}
-
+	
+	  @Override public String toString() { return "Hotel [hotelName=" + hotelName +
+	  ", weekRatesFor_RegularCustomer=" + weekRatesFor_RegularCustomer +
+	  ", weekendRatesFor_RegularCustomer=" + weekendRatesFor_RegularCustomer +
+	  ", weekRatesFor_RewardCustomer=" + weekRatesFor_RewardCustomer +
+	  ", weekendRatesFor_RewardCustomer=" + weekendRatesFor_RewardCustomer +
+	  ", price=" + price + ", rating=" + rating + "]"; }
+	 
 	public long getWeekRatesFor_RewardCustomer() {
 		return weekRatesFor_RewardCustomer;
 	}
