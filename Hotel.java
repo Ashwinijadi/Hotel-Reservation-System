@@ -4,6 +4,8 @@ public class Hotel {
 	public String hotelName;
 	public long weekRatesFor_RegularCustomer;
 	public long weekendRatesFor_RegularCustomer;
+	public long weekRatesFor_RewardCustomer;
+	public long weekendRatesFor_RewardCustomer;
 	public long price;
 	public int rating;
 
@@ -15,11 +17,38 @@ public class Hotel {
 		this.price = price;
 	}
 
-	public Hotel(String hotelName, long  weekRatesFor_RegularCustomer, long weekendRatesFor_RegularCustomer,int rating) {
+	public Hotel(String hotelName, long weekRatesFor_RegularCustomer, long weekendRatesFor_RegularCustomer,
+			long weekRatesFor_RewardCustomer, long weekendRatesFor_RewardCustomer, int rating) {
 		this.hotelName = hotelName;
-		this.weekRatesFor_RegularCustomer =weekRatesFor_RegularCustomer;
-		this.weekendRatesFor_RegularCustomer= weekendRatesFor_RegularCustomer;
-		this.rating=rating;
+		this.weekRatesFor_RegularCustomer = weekRatesFor_RegularCustomer;
+		this.weekendRatesFor_RegularCustomer = weekendRatesFor_RegularCustomer;
+		this.weekRatesFor_RewardCustomer = weekRatesFor_RewardCustomer;
+		this.weekendRatesFor_RewardCustomer = weekendRatesFor_RewardCustomer;
+		this.rating = rating;
+	}
+
+	@Override
+	public String toString() {
+		return "Hotel [hotelName=" + hotelName + ", weekRatesFor_RegularCustomer=" + weekRatesFor_RegularCustomer
+				+ ", weekendRatesFor_RegularCustomer=" + weekendRatesFor_RegularCustomer
+				+ ", weekRatesFor_RewardCustomer=" + weekRatesFor_RewardCustomer + ", weekendRatesFor_RewardCustomer="
+				+ weekendRatesFor_RewardCustomer + ", price=" + price + ", rating=" + rating + "]";
+	}
+
+	public long getWeekRatesFor_RewardCustomer() {
+		return weekRatesFor_RewardCustomer;
+	}
+
+	public void setWeekRatesFor_RewardCustomer(long weekRatesFor_RewardCustomer) {
+		this.weekRatesFor_RewardCustomer = weekRatesFor_RewardCustomer;
+	}
+
+	public long getWeekendRatesFor_RewardCustomer() {
+		return weekendRatesFor_RewardCustomer;
+	}
+
+	public void setWeekendRatesFor_RewardCustomer(long weekendRatesFor_RewardCustomer) {
+		this.weekendRatesFor_RewardCustomer = weekendRatesFor_RewardCustomer;
 	}
 
 	public int getRating() {
@@ -54,5 +83,4 @@ public class Hotel {
 		this.weekendRatesFor_RegularCustomer = weekendRatesFor_RegularCustomer;
 	}
 
-	
 }
